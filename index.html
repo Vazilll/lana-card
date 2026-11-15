@@ -1,0 +1,1359 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>С днём рождения, Лана! ✨</title>
+<meta name="description" content="Праздничная открытка для Ланы в чёрно-фиолетовом стиле: погаси свет, задуй свечи, таскай стикеры и открой подарок.">
+<meta property="og:title" content="С днём рождения, Лана! ✨">
+<meta property="og:description" content="Погаси свет, задуй свечи на торте, потаскай стикеры и открой подарок.">
+<meta name="theme-color" content="#F3EFFA">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='44' fill='%2315121B'/%3E%3Ccircle cx='50' cy='50' r='22' fill='%238B6CE8'/%3E%3C/svg%3E">
+<style>
+:root {
+  --bg: #F3EFFA;
+  --paper: #FCFAFF;
+  --surface: rgba(252, 250, 255, 0.92);
+  --ink: #15121B;
+  --muted: #504668;
+  --violet: #7C5AE0;
+  --violet-soft: #C6B5F7;
+  --lilac: #DFD2FC;
+  --plum: #593CA8;
+  --orb-mix: multiply;
+  --dot: rgba(21, 18, 27, 0.08);
+  --hairline: rgba(21, 18, 27, 0.12);
+  --shadow-ink: #15121B;
+  --candle-glow: rgba(247, 198, 102, 0.55);
+  --target-size: 24px;
+}
+
+/* Dark Velvet Purple + Black theme ("Погасить свет") */
+html.is-night {
+  --bg: #110E17;
+  --paper: #1B1626;
+  --surface: rgba(27, 22, 38, 0.92);
+  --ink: #F5F1FC;
+  --muted: #BFB4DB;
+  --violet: #9B7EF5;
+  --violet-soft: #6C4EC7;
+  --lilac: #37285C;
+  --plum: #B8A3F8;
+  --orb-mix: screen;
+  --dot: rgba(208, 192, 252, 0.09);
+  --hairline: rgba(216, 204, 248, 0.16);
+  --shadow-ink: #7C5AE0;
+  --candle-glow: rgba(255, 207, 107, 0.95);
+}
+
+@media (pointer: coarse) {
+  :root { --target-size: 44px; }
+}
+
+* { box-sizing: border-box; margin: 0; -webkit-tap-highlight-color: transparent; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+html.is-vt body { transition: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.5;
+  overflow-x: hidden;
+  overflow-wrap: anywhere;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.5px);
+  background-size: 22px 22px;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+/* Progress Indicator */
+.bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--violet), var(--violet-soft));
+  transform-origin: 0 50%;
+  transform: scaleX(var(--p, 0));
+  z-index: 40;
+  pointer-events: none;
+}
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: scroll()) {
+    @keyframes grow-progress {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+    .bar {
+      animation: grow-progress auto linear;
+      animation-timeline: scroll();
+    }
+  }
+}
+
+/* View transition radial wipe for Lights Out toggle */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  z-index: 999;
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* Top HUD respecting safe areas */
+.hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 30;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding-top: max(0.875rem, env(safe-area-inset-top, 0px));
+  padding-left: max(0.875rem, env(safe-area-inset-left, 0px));
+  padding-right: max(0.875rem, env(safe-area-inset-right, 0px));
+  padding-bottom: 14px;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 92%, transparent) 0%, color-mix(in srgb, var(--bg) 68%, transparent) 64%, transparent 100%);
+  pointer-events: none;
+}
+.hud > * { pointer-events: auto; }
+.hud-badge {
+  min-inline-size: 0;
+  white-space: nowrap;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--muted);
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--hairline);
+  padding: 0.6rem 0.85rem;
+  border-radius: 99px;
+}
+.hud-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.hud-short { display: none; }
+
+.pill-btn {
+  flex-shrink: 0;
+  white-space: nowrap;
+  min-block-size: var(--target-size);
+  min-inline-size: var(--target-size);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1;
+  padding: 0.6rem 0.9rem;
+  border-radius: 99px;
+  border: 2px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--shadow-ink);
+  transition: transform 0.35s ease-out, box-shadow 0.35s ease-out, background-color 0.25s ease-out;
+  transition-timing-function: linear(0, 0.22 6%, 0.62 14%, 0.92 24%, 1.06 34%, 1.03 46%, 1 60%, 1);
+}
+.pill-btn.is-violet { background: var(--lilac); }
+@media (hover: hover) {
+  .pill-btn:hover { transform: translate(-1px, -1px); box-shadow: 4px 4px 0 var(--shadow-ink); }
+}
+.pill-btn:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--shadow-ink); }
+
+@media (max-width: 440px) {
+  .hud-wide { display: none; }
+  .hud-short { display: inline; }
+  .pill-btn { padding: 0.55rem 0.72rem; }
+  .hud-badge { padding: 0.55rem 0.72rem; }
+}
+
+:where(button, [tabindex]):focus-visible {
+  outline: 3px solid var(--violet);
+  outline-offset: 4px;
+}
+
+/* Parallax Risograph Orbs (Black/Plum/Lilac) */
+.backdrop-layers {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: var(--orb-mix);
+  will-change: transform;
+}
+.orb-violet {
+  left: 50%;
+  top: 44%;
+  width: clamp(185px, 48vw, 350px);
+  aspect-ratio: 1;
+  background: var(--violet-soft);
+  opacity: 0.78;
+  transform: translate3d(calc(-50% + var(--vx, 0px)), calc(-50% + var(--vy, 0px)), 0) scale(var(--vs, 1));
+}
+.orb-plum {
+  left: 50%;
+  top: 52%;
+  width: clamp(140px, 37vw, 270px);
+  aspect-ratio: 1;
+  border-radius: 44% 56% 52% 48% / 48% 46% 54% 52%;
+  background: var(--lilac);
+  opacity: 0.75;
+  transform: translate3d(calc(-50% + var(--px, 0px)), calc(-50% + var(--py, 0px)), 0) rotate(var(--pr, 0deg));
+}
+.orb-dark {
+  left: 50%;
+  top: 38%;
+  width: clamp(88px, 24vw, 168px);
+  aspect-ratio: 1;
+  background: #2C223E;
+  opacity: 0.24;
+  transform: translate3d(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px)), 0) scale(var(--ds, 1));
+}
+html.is-night .orb-dark {
+  background: #5E3EC4;
+  opacity: 0.36;
+}
+html.is-night .orb-violet { opacity: 0.28; }
+html.is-night .orb-plum { opacity: 0.34; }
+
+/* Sections */
+section {
+  position: relative;
+  z-index: 1;
+  min-height: 100svh;
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: clamp(88px, 12vh, 114px) clamp(20px, 6vw, 64px) clamp(64px, 10vh, 108px);
+  scroll-margin-top: 84px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow: hidden;
+}
+.cake-card { scroll-margin-top: 84px; }
+.tag {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
+}
+h1, h2, h3 {
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-wrap: balance;
+  position: relative;
+  z-index: 2;
+}
+h1 { font-size: clamp(3rem, 1.35rem + 8vw, 7.4rem); max-width: 12ch; pointer-events: none; }
+h2 { font-size: clamp(2.35rem, 1.05rem + 6.5vw, 5.6rem); max-width: 12ch; pointer-events: none; }
+em { font-style: italic; font-weight: 400; color: var(--violet); }
+html.is-night em { color: #CBBDF9; }
+em.warm {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: var(--violet);
+  text-underline-offset: 0.1em;
+  text-decoration-thickness: 0.07em;
+}
+p.sub {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: clamp(1rem, 0.9rem + 0.45vw, 1.22rem);
+  font-weight: 400;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-top: 16px;
+  max-width: 34ch;
+  text-wrap: pretty;
+  position: relative;
+  z-index: 2;
+}
+
+.line {
+  width: 78px;
+  height: 3px;
+  background: var(--violet);
+  margin-top: 20px;
+  transform-origin: left;
+  position: relative;
+  z-index: 2;
+}
+
+/* Native scroll-entry reveals with IO fallback */
+@media (prefers-reduced-motion: no-preference) {
+  @supports ((animation-timeline: view()) and (animation-range: entry)) {
+    @keyframes reveal-up {
+      from { opacity: 0; translate: 0 26px; }
+      to { opacity: 1; translate: 0 0; }
+    }
+    @keyframes reveal-line {
+      from { scale: 0 1; }
+      to { scale: 1 1; }
+    }
+    section:not(.is-first) .r {
+      animation: reveal-up auto linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 58%;
+    }
+    section:not(.is-first) .line {
+      animation: reveal-line auto linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 62%;
+    }
+  }
+  @supports not ((animation-timeline: view()) and (animation-range: entry)) {
+    .r {
+      opacity: 0;
+      transform: translate3d(0, 26px, 0);
+      transition: opacity 0.85s ease-out, transform 0.85s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .in .r { opacity: 1; transform: translate3d(0, 0, 0); }
+    .in .r:nth-of-type(2) { transition-delay: 0.1s; }
+    .line { transform: scaleX(0); transition: transform 0.9s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .in .line { transform: scaleX(1); }
+  }
+}
+
+/* Kinetic Rotating Hero Stamp */
+.stamp-wrap {
+  position: absolute;
+  right: clamp(14px, 5vw, 56px);
+  top: clamp(86px, 13vh, 128px);
+  width: clamp(104px, 28vw, 152px);
+  aspect-ratio: 1;
+  z-index: 2;
+  pointer-events: none;
+}
+.stamp-ring {
+  width: 100%;
+  height: 100%;
+  fill: var(--ink);
+}
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes slow-spin {
+    to { transform: rotate(360deg); }
+  }
+  .stamp-ring { animation: slow-spin 22s linear infinite; }
+  body.is-paused .stamp-ring { animation-play-state: paused; }
+}
+
+/* Draggable Stickers */
+.s {
+  position: absolute;
+  left: var(--mx);
+  top: max(84px, var(--my));
+  z-index: 5;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  overflow-wrap: normal;
+  word-break: normal;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: grab;
+  touch-action: none;
+  border: 2.5px solid var(--ink);
+  box-shadow: 5px 6px 0 var(--shadow-ink);
+  color: var(--ink);
+  will-change: transform;
+  transition: box-shadow 0.35s ease-out;
+  transition-timing-function: linear(0, 0.22 6%, 0.62 14%, 0.92 24%, 1.06 34%, 1.03 46%, 1 60%, 1);
+}
+.s.drag {
+  box-shadow: 10px 12px 0 var(--shadow-ink);
+  cursor: grabbing;
+  z-index: 20;
+}
+.s.spring-reset {
+  transition: transform 0.65s ease-out, box-shadow 0.35s ease-out;
+  transition-timing-function: linear(0, 0.22 6%, 0.62 14%, 0.92 24%, 1.06 34%, 1.03 46%, 1 60%, 1);
+}
+
+.s-violet {
+  width: clamp(118px, 31vw, 158px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--violet-soft);
+  color: #15121B;
+  padding: 12px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: clamp(0.8125rem, 0.65rem + 0.8vw, 1.0625rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+html.is-night .s-violet { color: #F7F4FE; }
+.s-black {
+  padding: 0.7rem 1.15rem;
+  border-radius: 99px;
+  background: #15121B;
+  color: #FAF7FF;
+  border-color: var(--ink);
+  box-shadow: 5px 6px 0 var(--violet);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: clamp(0.875rem, 0.7rem + 0.8vw, 1.125rem);
+  font-weight: 600;
+  line-height: 1.15;
+}
+.s-card {
+  width: clamp(156px, 45vw, 240px);
+  padding: 0.875rem 1rem;
+  background: var(--paper);
+  border-radius: 18px;
+  font-family: Georgia, serif;
+  font-size: clamp(0.95rem, 0.78rem + 0.9vw, 1.3rem);
+  font-weight: 700;
+  line-height: 1.2;
+}
+.s-plum {
+  width: clamp(94px, 25vw, 138px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #4E3496;
+  color: #FAF7FF;
+  padding: 10px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: clamp(0.8125rem, 0.65rem + 0.7vw, 1.0625rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+.s-sq {
+  width: clamp(106px, 29vw, 154px);
+  aspect-ratio: 1;
+  border-radius: 20px;
+  background: var(--lilac);
+  color: var(--ink);
+  padding: 12px;
+  font-family: Georgia, serif;
+  font-size: clamp(0.875rem, 0.7rem + 0.8vw, 1.125rem);
+  font-weight: 700;
+  line-height: 1.15;
+}
+.tap-hint {
+  display: block;
+  margin-top: 4px;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* Interactive Birthday Cake Section */
+.cake-card {
+  margin-top: 20px;
+  max-width: 440px;
+  padding: 20px;
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 2.5px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 6px 7px 0 var(--shadow-ink);
+  position: relative;
+  z-index: 4;
+}
+.cake-stage {
+  position: relative;
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto 14px;
+  padding-top: 8px;
+}
+.candles-row {
+  display: flex;
+  justify-content: center;
+  gap: clamp(16px, 6vw, 28px);
+  margin-bottom: -4px;
+  position: relative;
+  z-index: 2;
+}
+.candle-btn {
+  min-block-size: 64px;
+  min-inline-size: 44px;
+  background: transparent;
+  border: none;
+  padding: 4px 8px 0;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+.flame {
+  width: 16px;
+  height: 24px;
+  border-radius: 50% 50% 45% 45% / 65% 65% 35% 35%;
+  background: radial-gradient(circle at 50% 70%, #FFF7D6 0%, #F4C26B 55%, #D97652 100%);
+  border: 2px solid #15121B;
+  transform-origin: 50% 90%;
+  transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+  box-shadow: 0 0 18px var(--candle-glow);
+}
+html.is-night .flame {
+  box-shadow: 0 0 28px 6px var(--candle-glow);
+}
+.candle-btn.is-out .flame {
+  opacity: 0;
+  transform: scale(0.1) translateY(8px);
+  box-shadow: none;
+}
+.wick {
+  width: 2.5px;
+  height: 6px;
+  background: var(--ink);
+}
+.wax {
+  width: 16px;
+  height: 36px;
+  border: 2.5px solid #15121B;
+  border-radius: 5px 5px 2px 2px;
+  background: repeating-linear-gradient(-35deg, #B8A3F8, #B8A3F8 6px, #FAF7FF 6px, #FAF7FF 12px);
+}
+.candle-btn:nth-child(2) .wax {
+  background: repeating-linear-gradient(-35deg, #272038, #272038 6px, #DFD2FC 6px, #DFD2FC 12px);
+}
+.candle-btn:nth-child(3) .wax {
+  background: repeating-linear-gradient(-35deg, #7C5AE0, #7C5AE0 6px, #FAF7FF 6px, #FAF7FF 12px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes flicker {
+    0%, 100% { transform: scale(1) rotate(-3deg); }
+    35% { transform: scale(1.06, 0.94) rotate(4deg); }
+    70% { transform: scale(0.95, 1.07) rotate(-2deg); }
+  }
+  .candle-btn:not(.is-out) .flame { animation: flicker 1.1s ease-in-out infinite; }
+  .candle-btn:nth-child(2):not(.is-out) .flame { animation-delay: 0.28s; }
+  .candle-btn:nth-child(3):not(.is-out) .flame { animation-delay: 0.55s; }
+  body.is-paused .candle-btn .flame { animation-play-state: paused; }
+}
+
+.cake-svg { display: block; width: 100%; height: auto; }
+.cake-status {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+  text-align: center;
+  margin-bottom: 14px;
+}
+.smoke-puff {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--muted);
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Note Box & Action Buttons */
+.note-box {
+  margin-top: 20px;
+  max-width: 36ch;
+  padding: 18px 20px;
+  background: var(--surface);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 2.5px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 5px 6px 0 var(--shadow-ink);
+  position: relative;
+  z-index: 4;
+}
+.note-meta {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.wish {
+  font-family: Georgia, serif;
+  font-size: clamp(1.18rem, 0.95rem + 1.35vw, 1.7rem);
+  font-weight: 700;
+  line-height: 1.28;
+  color: var(--ink);
+  text-wrap: pretty;
+  min-block-size: 2.6em;
+  width: fit-content;
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+.wish.sw { opacity: 0; transform: translate3d(0, 6px, 0); }
+
+.row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  position: relative;
+  z-index: 6;
+}
+.row.center { justify-content: center; margin-top: 0; padding-bottom: 0; }
+.btn {
+  min-block-size: max(46px, var(--target-size));
+  min-inline-size: var(--target-size);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 700;
+  line-height: 1.1;
+  padding: 0.78rem 1.18rem;
+  border-radius: 99px;
+  border: 2.5px solid var(--ink);
+  cursor: pointer;
+  background: var(--violet-soft);
+  color: #15121B;
+  box-shadow: 4px 5px 0 var(--shadow-ink);
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  transition-timing-function: linear(0, 0.22 6%, 0.62 14%, 0.92 24%, 1.06 34%, 1.03 46%, 1 60%, 1);
+}
+html.is-night .btn { color: #FAF7FF; }
+.btn.black { background: #15121B; color: #FAF7FF; }
+html.is-night .btn.black { background: #7C5AE0; color: #FAF7FF; }
+.btn.alt { background: var(--paper); color: var(--ink); }
+.btn:active { transform: translate(3px, 4px); box-shadow: 1px 1px 0 var(--shadow-ink); }
+@media (hover: hover) {
+  .btn:hover { transform: translate(-2px, -2px); box-shadow: 6px 7px 0 var(--shadow-ink); }
+}
+
+.pop {
+  position: fixed;
+  pointer-events: none;
+  z-index: 60;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 1.5px solid #15121B;
+}
+.pop.star { border-radius: 2px; width: 11px; height: 11px; }
+
+/* Gift Modal Dialog (top layer animations) */
+dialog#gift-dialog {
+  margin: auto;
+  width: min(92vw, 440px);
+  max-height: 88svh;
+  overflow-y: auto;
+  padding: 24px 22px;
+  border: 3px solid var(--ink);
+  border-radius: 26px;
+  background: var(--paper);
+  color: var(--ink);
+  box-shadow: 8px 10px 0 var(--shadow-ink);
+  opacity: 0;
+  transition-property: opacity, transform, display, overlay;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+@media (prefers-reduced-motion: no-preference) {
+  dialog#gift-dialog { transform: scale(0.92); }
+}
+dialog#gift-dialog:modal { overscroll-behavior: contain; }
+dialog#gift-dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background-color: rgba(17, 14, 23, 0);
+  backdrop-filter: blur(0px);
+  transition-property: background-color, display, overlay;
+  transition-duration: 0.3s;
+  transition-timing-function: ease-out;
+  transition-behavior: allow-discrete;
+}
+dialog#gift-dialog[open]:where(:not([data-closing])) {
+  opacity: 1;
+  @starting-style { opacity: 0; }
+  @media (prefers-reduced-motion: no-preference) {
+    transform: scale(1);
+    @starting-style { transform: scale(0.92); }
+  }
+}
+dialog#gift-dialog[open]:where(:not([data-closing]))::backdrop {
+  background-color: rgba(17, 14, 23, 0.56);
+  backdrop-filter: blur(5px);
+  @starting-style { background-color: rgba(17, 14, 23, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  dialog#gift-dialog,
+  dialog#gift-dialog::backdrop { transition-duration: 0.1s; }
+}
+
+.ticket {
+  border: 2px dashed var(--violet);
+  border-radius: 18px;
+  padding: 16px;
+  background: var(--bg);
+  margin: 14px 0 18px;
+}
+.ticket-title {
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+.perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.perk-chip {
+  min-block-size: 40px;
+  padding: 0.45rem 0.85rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  font-family: system-ui, -apple-system, sans-serif;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+  cursor: pointer;
+}
+.perk-chip.picked {
+  background: var(--violet);
+  color: #FAF7FF;
+  box-shadow: 2px 3px 0 var(--shadow-ink);
+}
+.dialog-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+.dialog-head h3 { font-size: clamp(1.5rem, 1.2rem + 1.5vw, 2rem); }
+
+/* Desktop */
+@media (min-width: 820px) {
+  section {
+    justify-content: center;
+    padding-top: 96px;
+    padding-bottom: 96px;
+  }
+  .s {
+    left: var(--dx);
+    top: max(84px, var(--dy));
+  }
+}
+
+/* Compact 320x568 phones */
+@media (max-height: 640px) {
+  section { padding-top: 74px; padding-bottom: 28px; }
+  h2 { font-size: clamp(1.95rem, 0.9rem + 5.2vw, 2.75rem); }
+  .cake-card { margin-top: 10px; padding: 12px 14px; }
+  .candle-btn { min-block-size: 50px; }
+  .wax { height: 28px; }
+  .note-box { margin-top: 10px; padding: 12px 14px; }
+  .wish { font-size: 1.05rem; min-block-size: 2.1em; }
+  .row { margin-top: 10px; gap: 7px; }
+  .btn { padding: 0.58rem 0.88rem; font-size: 0.84rem; min-block-size: 42px; }
+  .stamp-wrap { width: 86px; top: 74px; }
+  #end .s-plum { width: 76px; font-size: 0.72rem; --my: 14%; }
+}
+</style>
+</head>
+<body>
+<div class="bar" id="bar" aria-hidden="true"></div>
+
+<header class="hud">
+  <span class="hud-badge">ЛАНА<span class="hud-wide"> · BLACK × VIOLET</span></span>
+  <div class="hud-actions">
+    <button class="pill-btn is-violet" id="night-btn" type="button" aria-pressed="false" aria-label="Приглушить свет — включить тёмный режим">☽<span class="hud-wide"> Ночь</span></button>
+    <button class="pill-btn" id="sound-btn" type="button" aria-pressed="false" aria-label="Сыграть мелодию с днём рождения">♪<span class="hud-wide"> Мелодия</span></button>
+    <button class="pill-btn" id="pause" type="button" aria-pressed="false">Пауза</button>
+  </div>
+</header>
+
+<div class="backdrop-layers" aria-hidden="true">
+  <div class="orb orb-violet" id="orb-violet"></div>
+  <div class="orb orb-plum" id="orb-plum"></div>
+  <div class="orb orb-dark" id="orb-dark"></div>
+</div>
+
+<main>
+  <!-- 01 · HERO -->
+  <section class="is-first" aria-label="Поздравление">
+    <div class="stamp-wrap" aria-hidden="true">
+      <svg class="stamp-ring" viewBox="0 0 120 120">
+        <defs>
+          <path id="stamp-circle" d="M 60,60 m -44,0 a 44,44 0 1,1 88,0 a 44,44 0 1,1 -88,0"/>
+        </defs>
+        <text font-family="system-ui, -apple-system, sans-serif" font-size="9.3" font-weight="700" letter-spacing="2.3">
+          <textPath href="#stamp-circle">С ДНЁМ РОЖДЕНИЯ · ЛАНА · ✦ · </textPath>
+        </text>
+        <circle cx="60" cy="60" r="16" fill="#C6B5F7" stroke="#15121B" stroke-width="2"/>
+        <text x="60" y="65" text-anchor="middle" font-size="16" fill="#15121B">✦</text>
+      </svg>
+    </div>
+
+    <span class="tag">01 · СЕГОДНЯ ТВОЙ ДЕНЬ</span>
+    <h1 class="r">С днём<br>рождения,<br><em>Лана!</em></h1>
+    <p class="sub r">Собрано специально в твоих цветах — фиолетовом и чёрном. Попробуй погасить свет, задуть свечи и потаскать стикеры.</p>
+
+    <div class="s s-violet" id="st-bday" role="button" tabindex="0"
+         aria-label="Стикер дня рождения — нажми или тяни"
+         style="--mx:10%;--my:18%;--dx:59%;--dy:36%;--r:-6deg">
+      <span>
+        <span id="bday-sticker">чёрный ×<br>фиолетовый</span>
+        <span class="tap-hint">нажми или тяни</span>
+      </span>
+    </div>
+    <div class="s s-black" role="button" tabindex="0"
+         aria-label="Стикер: +100 к удаче"
+         style="--mx:48%;--my:36%;--dx:73%;--dy:60%;--r:4deg">+100 к магии ✦</div>
+  </section>
+
+  <!-- 02 · INTERACTIVE BIRTHDAY CAKE WITH LIGHTS OUT -->
+  <section aria-label="Торт со свечами">
+    <span class="tag">02 · ЗАГАДАЙ ЖЕЛАНИЕ</span>
+    <h2 class="r">Погаси свет<br>и задуй <em class="warm">свечи.</em></h2>
+
+    <div class="cake-card">
+      <div class="cake-stage">
+        <div class="candles-row" id="candles-row">
+          <button class="candle-btn" type="button" aria-label="Задуть первую свечу">
+            <span class="flame" aria-hidden="true"></span>
+            <span class="wick" aria-hidden="true"></span>
+            <span class="wax" aria-hidden="true"></span>
+          </button>
+          <button class="candle-btn" type="button" aria-label="Задуть вторую свечу">
+            <span class="flame" aria-hidden="true"></span>
+            <span class="wick" aria-hidden="true"></span>
+            <span class="wax" aria-hidden="true"></span>
+          </button>
+          <button class="candle-btn" type="button" aria-label="Задуть третью свечу">
+            <span class="flame" aria-hidden="true"></span>
+            <span class="wick" aria-hidden="true"></span>
+            <span class="wax" aria-hidden="true"></span>
+          </button>
+        </div>
+        <svg class="cake-svg" viewBox="0 0 260 118" aria-hidden="true">
+          <rect x="44" y="8" width="172" height="36" rx="12" fill="#2A223B" stroke="#15121B" stroke-width="3"/>
+          <path d="M44 20 Q66 36 88 22 Q110 38 130 22 Q152 38 174 22 Q196 36 216 20 L216 14 Q216 8 210 8 L50 8 Q44 8 44 14 Z" fill="#C6B5F7" stroke="#15121B" stroke-width="2.5"/>
+          <rect x="24" y="42" width="212" height="54" rx="14" fill="#1D172B" stroke="#15121B" stroke-width="3"/>
+          <path d="M24 58 Q55 72 86 58 Q118 72 150 58 Q184 72 236 58" fill="none" stroke="#9B7EF5" stroke-width="4" stroke-linecap="round"/>
+          <rect x="10" y="96" width="240" height="14" rx="7" fill="#FCFAFF" stroke="#15121B" stroke-width="3"/>
+          <circle cx="72" cy="78" r="4" fill="#C6B5F7"/>
+          <circle cx="130" cy="82" r="4" fill="#F4C26B"/>
+          <circle cx="188" cy="78" r="4" fill="#C6B5F7"/>
+        </svg>
+      </div>
+      <p class="cake-status" id="cake-status" aria-live="polite">Горит 3 из 3 — в темноте огоньки красивее!</p>
+      <div class="row center">
+        <button class="btn black" id="cake-lights" type="button">Погасить свет ☽</button>
+        <button class="btn" id="blow-all" type="button">Задуть все свечи ✨</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 · STICKERS PLAYGROUND -->
+  <section aria-label="Пожелание года">
+    <span class="tag">03 · ТВОЙ ГОД</span>
+    <h2 class="r">Пусть год<br>будет<br><em>ярким, Лана.</em></h2>
+    <p class="sub r">Побольше поводов гордиться собой, смелых планов и вечеров, которые запоминаются.</p>
+    <div class="line" aria-hidden="true"></div>
+
+    <div class="s s-card" role="button" tabindex="0"
+         aria-label="Стикер: меньше суеты, больше повода сиять"
+         style="--mx:40%;--my:12%;--dx:60%;--dy:18%;--r:4deg">«Меньше усталости — больше повода сиять»</div>
+    <div class="s s-sq" role="button" tabindex="0"
+         aria-label="Стикер: счастливого дня"
+         style="--mx:12%;--my:24%;--dx:68%;--dy:48%;--r:-7deg">счастливого<br>дня ☺</div>
+  </section>
+
+  <!-- 04 · GIFT & WISHES FINALE -->
+  <section aria-label="Подарок и тосты" id="end">
+    <span class="tag">04 · ФИНАЛ</span>
+    <h2 class="r">С твоим<br>днём, <em class="warm">Лана.</em></h2>
+
+    <div class="note-box">
+      <div class="note-meta">ТОСТ · <span id="wish-idx">1</span> / 6</div>
+      <p class="wish" id="wish" aria-live="polite">Пусть всё задуманное сбывается легко, а рядом всегда будут люди, от которых тепло.</p>
+    </div>
+
+    <div class="row">
+      <button class="btn black" id="open-gift" type="button">Открыть подарок 🎁</button>
+      <button class="btn" id="next" type="button">Ещё тост ✦</button>
+      <button class="btn alt" id="reset" type="button">Собрать стикеры</button>
+      <button class="btn alt" id="top" type="button">Наверх ↺</button>
+    </div>
+
+    <div class="s s-plum" role="button" tabindex="0"
+         aria-label="Стикер: ура, с днём рождения"
+         style="--mx:62%;--my:13%;--dx:70%;--dy:22%;--r:-6deg">✦<br>ура!<br>с др!</div>
+  </section>
+</main>
+
+<!-- Celebratory Black & Violet Ticket Modal -->
+<dialog id="gift-dialog" closedby="any" aria-labelledby="gift-title">
+  <div class="dialog-head">
+    <h3 id="gift-title">VIP-билет для Ланы ✦</h3>
+    <button class="pill-btn" id="gift-x" type="button" aria-label="Закрыть подарок">✕</button>
+  </div>
+  <div class="ticket">
+    <div class="ticket-title">BLACK × VIOLET EDITION · № 01-BDAY</div>
+    <p id="ticket-copy">Отметь, что забираем с собой в новый год жизни:</p>
+    <div class="perks" id="perks">
+      <button class="perk-chip picked" type="button" aria-pressed="true">Крутые поездки ✈</button>
+      <button class="perk-chip" type="button" aria-pressed="false">Спокойные утра ☕</button>
+      <button class="perk-chip" type="button" aria-pressed="false">Смелые победы ✦</button>
+      <button class="perk-chip" type="button" aria-pressed="false">Исполнение желаний ☺</button>
+    </div>
+  </div>
+  <form method="dialog" class="row center">
+    <button class="btn black" id="gift-celebrate" type="button">Салют в твою честь ✨</button>
+    <button class="btn alt" id="gift-close" type="submit" value="ok">Закрыть</button>
+  </form>
+</dialog>
+
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const root = document.documentElement;
+
+/* 1. Scroll-timeline fallback check */
+const bar = $('#bar');
+const supportsScrollTimeline = window.CSS && CSS.supports('animation-timeline', 'scroll()');
+const supportsViewTimeline = window.CSS && CSS.supports('(animation-timeline: view()) and (animation-range: entry)');
+if (!supportsViewTimeline) {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.25 });
+  $$('section').forEach(sec => io.observe(sec));
+}
+
+/* 2. Black + Violet + Pearl Confetti */
+const palette = ['#7C5AE0', '#C6B5F7', '#15121B', '#DFD2FC', '#F4C26B'];
+function burstConfetti(cx, cy, count = 22) {
+  if (reduce) return;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('i');
+    p.className = i % 3 === 0 ? 'pop star' : 'pop';
+    p.style.background = palette[i % palette.length];
+    p.style.left = cx + 'px';
+    p.style.top = cy + 'px';
+    document.body.append(p);
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 60 + Math.random() * 125;
+    const rot = (Math.random() - 0.5) * 320;
+    const anim = p.animate([
+      { transform: 'translate3d(0,0,0) scale(1) rotate(0deg)', opacity: 1 },
+      { transform: `translate3d(${Math.cos(angle) * dist}px, ${Math.sin(angle) * dist + 28}px, 0) scale(0.15) rotate(${rot}deg)`, opacity: 0 }
+    ], { duration: 720 + Math.random() * 340, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' });
+    anim.onfinish = () => p.remove();
+  }
+}
+
+/* 3. "Lights Out" View Transition (Lilac+Black <-> Velvet Black+Violet) */
+const nightBtn = $('#night-btn');
+const cakeLightsBtn = $('#cake-lights');
+function updateThemeButtons() {
+  const isNight = root.classList.contains('is-night');
+  nightBtn.innerHTML = isNight ? '☀<span class="hud-wide"> Свет</span>' : '☽<span class="hud-wide"> Ночь</span>';
+  nightBtn.setAttribute('aria-pressed', String(isNight));
+  nightBtn.setAttribute('aria-label', isNight ? 'Включить светлую тему' : 'Приглушить свет — включить тёмный режим');
+  cakeLightsBtn.textContent = isNight ? 'Включить свет ☀' : 'Погасить свет ☽';
+}
+
+function toggleNight(e) {
+  const rect = e.currentTarget.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  const maxR = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+
+  const applyTheme = () => {
+    root.classList.toggle('is-night');
+    updateThemeButtons();
+  };
+
+  if (!document.startViewTransition || reduce) {
+    applyTheme();
+    return;
+  }
+  root.classList.add('is-vt');
+  const vt = document.startViewTransition(applyTheme);
+  vt.ready.then(() => {
+    document.documentElement.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${maxR}px at ${x}px ${y}px)`] },
+      { duration: 620, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', pseudoElement: '::view-transition-new(root)' }
+    );
+  }).catch(() => {});
+  vt.finished.finally(() => root.classList.remove('is-vt'));
+}
+nightBtn.addEventListener('click', toggleNight);
+cakeLightsBtn.addEventListener('click', toggleNight);
+
+/* 4. Parallax Orbs + Pause Control */
+const orbViolet = $('#orb-violet'), orbPlum = $('#orb-plum'), orbDark = $('#orb-dark');
+let smoothP = 0, paused = reduce;
+const pb = $('#pause');
+const syncPauseUI = () => {
+  pb.textContent = paused ? 'Играть' : 'Пауза';
+  pb.setAttribute('aria-pressed', String(paused));
+  document.body.classList.toggle('is-paused', paused);
+};
+syncPauseUI();
+pb.addEventListener('click', () => { paused = !paused; syncPauseUI(); });
+
+function tick() {
+  const maxScroll = Math.max(1, document.documentElement.scrollHeight - innerHeight);
+  const targetP = scrollY / maxScroll;
+  if (!supportsScrollTimeline) bar.style.setProperty('--p', targetP.toFixed(4));
+  if (!paused) smoothP += (targetP - smoothP) * 0.08;
+
+  const a = smoothP * Math.PI * 3.2;
+  orbViolet.style.setProperty('--vx', (Math.sin(a) * innerWidth * 0.16).toFixed(1) + 'px');
+  orbViolet.style.setProperty('--vy', ((-Math.cos(a) + 0.35) * innerHeight * 0.1).toFixed(1) + 'px');
+  orbViolet.style.setProperty('--vs', (1 + Math.sin(a + 1) * (reduce ? 0.08 : 0.28)).toFixed(3));
+
+  orbPlum.style.setProperty('--px', (-Math.sin(a * 0.78) * innerWidth * 0.17).toFixed(1) + 'px');
+  orbPlum.style.setProperty('--py', ((Math.cos(a * 0.78) - 0.25) * innerHeight * 0.12).toFixed(1) + 'px');
+  orbPlum.style.setProperty('--pr', (smoothP * 145).toFixed(1) + 'deg');
+
+  orbDark.style.setProperty('--dx', (Math.cos(a * 1.15) * innerWidth * 0.14).toFixed(1) + 'px');
+  orbDark.style.setProperty('--dy', (Math.sin(a * 1.15) * innerHeight * 0.13).toFixed(1) + 'px');
+  orbDark.style.setProperty('--ds', (1 + Math.cos(a) * (reduce ? 0.06 : 0.22)).toFixed(3));
+  requestAnimationFrame(tick);
+}
+tick();
+
+/* 5. Interactive Cake Candles */
+const candleBtns = $$('.candle-btn');
+const cakeStatus = $('#cake-status');
+const blowAllBtn = $('#blow-all');
+
+function emitSmoke(btn) {
+  if (reduce) return;
+  for (let i = 0; i < 3; i++) {
+    const puff = document.createElement('span');
+    puff.className = 'smoke-puff';
+    btn.append(puff);
+    puff.animate([
+      { transform: 'translate3d(-50%, 0, 0) scale(0.6)', opacity: 0.7 },
+      { transform: `translate3d(${(i - 1) * 14}px, -38px, 0) scale(1.8)`, opacity: 0 }
+    ], { duration: 680 + i * 120, easing: 'ease-out' }).onfinish = () => puff.remove();
+  }
+}
+
+function updateCakeState() {
+  const lit = candleBtns.filter(b => !b.classList.contains('is-out')).length;
+  cakeStatus.textContent = lit === 0
+    ? 'Все свечи задуты — пусть загаданное сбудется ✨'
+    : `Горит ${lit} из 3 — в темноте огоньки красивее!`;
+  blowAllBtn.textContent = lit === 0 ? 'Зажечь свечи снова ✦' : 'Задуть все свечи ✨';
+  if (lit === 0) {
+    const r = cakeStatus.getBoundingClientRect();
+    burstConfetti(r.left + r.width / 2, r.top - 40, 30);
+  }
+}
+
+candleBtns.forEach((btn, idx) => {
+  btn.addEventListener('click', () => {
+    if (btn.classList.contains('is-out')) return;
+    btn.classList.add('is-out');
+    btn.setAttribute('aria-label', `Свеча ${idx + 1} задута`);
+    emitSmoke(btn);
+    updateCakeState();
+  });
+});
+
+blowAllBtn.addEventListener('click', () => {
+  const lit = candleBtns.filter(b => !b.classList.contains('is-out'));
+  if (lit.length === 0) {
+    candleBtns.forEach((b, idx) => {
+      b.classList.remove('is-out');
+      b.setAttribute('aria-label', `Задуть свечу ${idx + 1}`);
+    });
+    updateCakeState();
+    return;
+  }
+  lit.forEach((b, i) => {
+    setTimeout(() => {
+      b.classList.add('is-out');
+      emitSmoke(b);
+      if (i === lit.length - 1) updateCakeState();
+    }, reduce ? 0 : i * 140);
+  });
+});
+
+/* 6. Draggable & Tappable Stickers */
+const heroStickerNotes = [
+  'чёрный ×<br>фиолетовый',
+  'главная<br>звезда дня',
+  'ночь и<br>волшебство ✦',
+  'загадай<br>желание ☺'
+];
+let hi = 0, zTop = 15;
+const resetStickers = [];
+
+$$('.s').forEach(el => {
+  let x = 0, y = 0, vx = 0, vy = 0, sx = 0, sy = 0, ox = 0, oy = 0, down = false, moved = false, raf = 0;
+  const baseRot = parseFloat(getComputedStyle(el).getPropertyValue('--r')) || 0;
+  let rot = baseRot;
+  const put = (sc = 1) => {
+    el.style.transform = `translate3d(${x.toFixed(1)}px,${y.toFixed(1)}px,0) rotate(${rot.toFixed(1)}deg) scale(${sc})`;
+  };
+  put();
+
+  const clampSec = () => {
+    const sec = el.parentElement.getBoundingClientRect();
+    const b = el.getBoundingClientRect();
+    if (b.left < sec.left + 8) { x += (sec.left + 8) - b.left; vx *= -0.45; }
+    if (b.right > sec.right - 8) { x -= b.right - (sec.right - 8); vx *= -0.45; }
+    if (b.top < sec.top + 80) { y += (sec.top + 80) - b.top; vy *= -0.45; }
+    if (b.bottom > sec.bottom - 12) { y -= b.bottom - (sec.bottom - 12); vy *= -0.45; }
+  };
+
+  const glide = () => {
+    if (down) return;
+    vx *= 0.88; vy *= 0.88; x += vx; y += vy;
+    rot += (baseRot - rot) * 0.14;
+    put(); clampSec(); put();
+    if (Math.abs(vx) + Math.abs(vy) > 0.25 || Math.abs(rot - baseRot) > 0.25) raf = requestAnimationFrame(glide);
+  };
+
+  const tap = () => {
+    if (el.id === 'st-bday') {
+      hi = (hi + 1) % heroStickerNotes.length;
+      $('#bday-sticker').innerHTML = heroStickerNotes[hi];
+    }
+    if (!reduce) {
+      put(1.08);
+      setTimeout(() => put(1), 160);
+    }
+  };
+
+  el.addEventListener('pointerdown', e => {
+    el.classList.remove('spring-reset');
+    down = true; moved = false; cancelAnimationFrame(raf);
+    el.setPointerCapture(e.pointerId);
+    sx = e.clientX; sy = e.clientY; ox = x; oy = y;
+    el.classList.add('drag');
+    el.style.zIndex = ++zTop;
+  });
+
+  el.addEventListener('pointermove', e => {
+    if (!down) return;
+    const dx = e.clientX - sx, dy = e.clientY - sy;
+    if (Math.hypot(dx, dy) > 6) moved = true;
+    const nx = ox + dx, ny = oy + dy;
+    vx = Math.max(-24, Math.min(24, nx - x));
+    vy = Math.max(-24, Math.min(24, ny - y));
+    x = nx; y = ny;
+    rot = baseRot + Math.max(-20, Math.min(20, vx * 0.75));
+    put();
+  });
+
+  const up = () => {
+    if (!down) return;
+    down = false; el.classList.remove('drag');
+    if (!moved) tap(); else glide();
+  };
+  el.addEventListener('pointerup', up);
+  el.addEventListener('pointercancel', up);
+
+  el.addEventListener('keydown', e => {
+    const step = { ArrowLeft: [-22, 0], ArrowRight: [22, 0], ArrowUp: [0, -22], ArrowDown: [0, 22] }[e.key];
+    if (step) { e.preventDefault(); x += step[0]; y += step[1]; put(); clampSec(); put(); }
+    else if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tap(); }
+  });
+
+  resetStickers.push(() => {
+    cancelAnimationFrame(raf);
+    vx = 0; vy = 0; x = 0; y = 0; rot = baseRot;
+    if (!reduce) el.classList.add('spring-reset');
+    put();
+  });
+});
+
+/* 7. Birthday Toasts */
+const toasts = [
+  'Пусть всё задуманное сбывается легко, а рядом всегда будут люди, от которых тепло.',
+  'Желаю год без лишней спешки, но с кучей ярких событий, от которых загораются глаза.',
+  'Пусть удача сама находит тебя в самые неожиданные понедельники и пятницы.',
+  'Больше красивых мест, вкусных ужинов и поводов смеяться до слёз.',
+  'Официально желаю, чтобы этот новый личный год стал лучшей версией всех предыдущих!',
+  'Лана, пусть в каждом дне будет хоть маленькое чудо и повод улыбнуться ✦'
+];
+let ti = 0;
+const wishEl = $('#wish'), idxEl = $('#wish-idx');
+
+$('#next').addEventListener('click', e => {
+  ti = (ti + 1) % toasts.length;
+  wishEl.classList.add('sw');
+  setTimeout(() => {
+    wishEl.textContent = toasts[ti];
+    idxEl.textContent = String(ti + 1);
+    wishEl.classList.remove('sw');
+  }, reduce ? 0 : 190);
+  const r = e.currentTarget.getBoundingClientRect();
+  burstConfetti(r.left + r.width / 2, r.top + r.height / 2, 18);
+});
+
+$('#reset').addEventListener('click', () => resetStickers.forEach(fn => fn()));
+$('#top').addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
+
+/* 8. Gift Modal Dialog */
+const dialog = $('#gift-dialog');
+let supportsDisp;
+function canTransitionDisplay() {
+  if (supportsDisp !== undefined) return supportsDisp;
+  if (!window.CSS?.supports?.('transition-behavior', 'allow-discrete') || !document.body) return false;
+  const probe = document.createElement('div');
+  probe.style.cssText = 'transition: display 1s allow-discrete !important; display: block;';
+  document.body.appendChild(probe);
+  getComputedStyle(probe).display;
+  probe.style.display = 'none';
+  supportsDisp = getComputedStyle(probe).display === 'block';
+  probe.remove();
+  return supportsDisp;
+}
+
+async function closeGiftDialog() {
+  if (!(window.CSS?.supports?.('overlay', 'auto') && canTransitionDisplay())) {
+    dialog.setAttribute('data-closing', '');
+    const anims = dialog.getAnimations({ subtree: true });
+    if (anims.length > 0) {
+      await Promise.race([
+        Promise.allSettled(anims.map(a => a.finished)),
+        new Promise(r => setTimeout(r, 800))
+      ]);
+    }
+    if (!dialog.hasAttribute('data-closing')) return;
+    dialog.removeAttribute('data-closing');
+  }
+  dialog.close();
+}
+
+$('#open-gift').addEventListener('click', () => {
+  dialog.removeAttribute('data-closing');
+  dialog.showModal();
+  const r = dialog.getBoundingClientRect();
+  burstConfetti(r.left + r.width / 2, r.top + 30, 18);
+});
+$('#gift-x').addEventListener('click', () => closeGiftDialog());
+$('#gift-close').addEventListener('click', e => {
+  e.preventDefault();
+  closeGiftDialog();
+});
+dialog.addEventListener('cancel', e => { e.preventDefault(); closeGiftDialog(); });
+dialog.addEventListener('close', () => { dialog.returnValue = ''; });
+
+if (!('closedBy' in HTMLDialogElement.prototype)) {
+  const outside = e => {
+    const r = dialog.getBoundingClientRect();
+    return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+  };
+  let pressedOutside = false;
+  dialog.addEventListener('pointerdown', e => { pressedOutside = outside(e); });
+  dialog.addEventListener('pointerup', e => { if (pressedOutside && outside(e)) closeGiftDialog(); });
+}
+
+$$('.perk-chip').forEach(chip => {
+  chip.addEventListener('click', () => {
+    const picked = chip.classList.toggle('picked');
+    chip.setAttribute('aria-pressed', String(picked));
+    const pickedCount = $$('.perk-chip.picked').length;
+    $('#ticket-copy').textContent = pickedCount > 0
+      ? `Упаковано в год: ${pickedCount} из 4 — всё оформлено для Ланы!`
+      : 'Выбери хотя бы одно пожелание — оно бесплатно!';
+  });
+});
+
+$('#gift-celebrate').addEventListener('click', e => {
+  const r = e.currentTarget.getBoundingClientRect();
+  burstConfetti(r.left + r.width / 2, r.top, 28);
+});
+
+/* 9. Optional Web Audio Birthday Melody */
+let audioCtx = null, melodyTimer = null, isPlaying = false, activeOscs = [];
+const soundBtn = $('#sound-btn');
+const bdayNotes = [
+  [392, 0.28], [392, 0.2], [440, 0.45], [392, 0.45], [523.25, 0.45], [493.88, 0.8],
+  [392, 0.28], [392, 0.2], [440, 0.45], [392, 0.45], [587.33, 0.45], [523.25, 0.8]
+];
+
+function stopMelody() {
+  clearTimeout(melodyTimer);
+  activeOscs.forEach(osc => { try { osc.stop(); osc.disconnect(); } catch {} });
+  activeOscs = [];
+  isPlaying = false;
+  soundBtn.innerHTML = '♪<span class="hud-wide"> Мелодия</span>';
+  soundBtn.setAttribute('aria-pressed', 'false');
+  soundBtn.setAttribute('aria-label', 'Сыграть мелодию с днём рождения');
+}
+
+soundBtn.addEventListener('click', () => {
+  if (isPlaying) { stopMelody(); return; }
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if (!AC) return;
+  if (!audioCtx) audioCtx = new AC();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  isPlaying = true;
+  soundBtn.innerHTML = '♪<span class="hud-wide"> Стоп</span>';
+  soundBtn.setAttribute('aria-pressed', 'true');
+  soundBtn.setAttribute('aria-label', 'Остановить мелодию');
+  let t = audioCtx.currentTime + 0.04;
+  activeOscs = [];
+  bdayNotes.forEach(([freq, dur]) => {
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(freq, t);
+    gain.gain.setValueAtTime(0.001, t);
+    gain.gain.exponentialRampToValueAtTime(0.11, t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + dur * 0.92);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start(t);
+    osc.stop(t + dur);
+    activeOscs.push(osc);
+    t += dur + 0.03;
+  });
+  melodyTimer = setTimeout(stopMelody, (t - audioCtx.currentTime) * 1000);
+});
+</script>
+</body>
+</html>
